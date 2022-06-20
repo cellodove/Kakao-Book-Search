@@ -1,10 +1,10 @@
-package com.kakaopay.book.presentation
+package com.cellodove.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kakaopay.book.domain.BookRepository
+import com.cellodove.domain.repository.BookRepository
 
-class MainViewModelFactory(
+/*class MainViewModelFactory(
     private val repository: BookRepository
 ) : ViewModelProvider.Factory {
 
@@ -12,4 +12,4 @@ class MainViewModelFactory(
         MainViewModel(
             repository
         ) as T
-}
+}*/
