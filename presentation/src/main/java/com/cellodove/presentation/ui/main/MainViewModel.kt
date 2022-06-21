@@ -25,8 +25,10 @@ class MainViewModel @Inject constructor(
 
 
     fun request(userQuery: String, page: Int, size: Int) = viewModelScope.launch {
-        val response = searchBookUseCase(userQuery,page,size,viewModelScope)
-        Log.i("KakaoPay", response.toString())
+        searchBookUseCase(userQuery,page,size,viewModelScope){
+
+        }
+
     }
 
     fun fragmentChange(fragmentStep:FragmentStep){

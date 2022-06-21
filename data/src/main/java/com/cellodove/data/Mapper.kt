@@ -1,5 +1,6 @@
 package com.cellodove.data
 
+import androidx.lifecycle.Transformations.map
 import com.cellodove.data.model.BookItemResponse
 import com.cellodove.data.model.BookMetaResponse
 import com.cellodove.data.model.BookResponse
@@ -65,6 +66,7 @@ fun BookMetaResponse.map() = Meta(
 
 fun BookResponse.map() = SearchBookResponse(
     meta.map(),
+
     documents.toList().map {
         Documents(
             it.title,
@@ -97,6 +99,6 @@ fun BookItemResponse.map() = Documents(
     status
 )
 
-fun mapperToBookResponse(bookResponse : BookResponse) : SearchBookResponse{
+fun mapperToSearchBookResponse(bookResponse : BookResponse) : SearchBookResponse{
     return bookResponse.map()
 }

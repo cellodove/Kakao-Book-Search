@@ -12,6 +12,6 @@ class BookRemoteDataSourceImpl @Inject constructor(
     private val kakaoBookService: KakaoBookService
 ) : BookRemoteDataSource{
     override suspend fun getBooks(userQuery: String, page: Int, size: Int): BookResponse {
-        return kakaoBookService.getBooks(userQuery,page,size)
+        return kakaoBookService.getBooks("KakaoAK 909689c173c91d9b3ea428891711edd1",userQuery,page,size)
     }
 }

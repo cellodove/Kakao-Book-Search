@@ -8,7 +8,7 @@ import javax.inject.Inject
 class BookRepositoryImpl @Inject constructor(
     private val bookRemoteDataSource : BookRemoteDataSource
 ): BookRepository {
-    override suspend fun searchBook(userQuery: String, page: Int, size: Int,): SearchBookResponse {
-        return mapperToBookResponse(bookRemoteDataSource.getBooks(userQuery,page,size))
+    override suspend fun searchBook(userQuery: String, page: Int, size: Int): SearchBookResponse {
+        return mapperToSearchBookResponse(bookRemoteDataSource.getBooks(userQuery,page,size))
     }
 }
