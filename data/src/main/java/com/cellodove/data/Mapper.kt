@@ -52,6 +52,28 @@ fun mapperToBookResponse(searchBookResponse : SearchBookResponse) : BookResponse
     return searchBookResponse.map()
 }
 
+fun mapperToBookResponseList(documents:List<Documents>) : List<BookItemResponse>{
+    return documents.toList().map {
+        BookItemResponse(
+            it.title,
+            it.contents,
+            it.url,
+            it.isbn,
+            it.datetime,
+            it.authors,
+            it.publisher,
+            it.translators,
+            it.price,
+            it.sale_price,
+            it.thumbnail,
+            it.status
+        )
+    }
+}
+
+
+
+
 
 
 
@@ -101,4 +123,23 @@ fun BookItemResponse.map() = Documents(
 
 fun mapperToSearchBookResponse(bookResponse : BookResponse) : SearchBookResponse{
     return bookResponse.map()
+}
+
+fun mapperToBookItemResponseList(bookItemResponse:List<BookItemResponse>) : List<Documents>{
+    return bookItemResponse.toList().map {
+        Documents(
+            it.title,
+            it.contents,
+            it.url,
+            it.isbn,
+            it.datetime,
+            it.authors,
+            it.publisher,
+            it.translators,
+            it.price,
+            it.salePrice,
+            it.thumbnail,
+            it.status
+        )
+    }
 }
