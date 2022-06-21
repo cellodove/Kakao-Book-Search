@@ -1,9 +1,10 @@
-package com.kakaopay.book.data
+package com.cellodove.data.service
 
+import com.cellodove.data.model.BookResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface BookRemoteDataSource {
+interface KakaoBookService {
 
     @GET("/v3/search/book")
     suspend fun getBooks(
@@ -11,5 +12,4 @@ interface BookRemoteDataSource {
         @Query(value = "page") page: Int,
         @Query(value = "size") size: Int
     ): BookResponse
-
 }

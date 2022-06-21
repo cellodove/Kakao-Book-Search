@@ -1,4 +1,4 @@
-package com.kakaopay.book.data
+package com.cellodove.data.model
 
 import com.google.gson.annotations.SerializedName
 
