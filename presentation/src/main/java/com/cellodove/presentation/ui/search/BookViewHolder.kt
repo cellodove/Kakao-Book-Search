@@ -10,9 +10,6 @@ import com.cellodove.domain.model.response.Documents
 class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.ViewHolder(binding.root){
 
     init {
-        binding.root.setOnClickListener {
-
-        }
     }
 
     fun bind(documents : Documents){

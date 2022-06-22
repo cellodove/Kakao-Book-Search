@@ -2,12 +2,13 @@ package com.cellodove.presentation.ui.search
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.cellodove.book.databinding.FragmentSearchBinding
+import com.cellodove.domain.model.response.Documents
 import com.cellodove.presentation.base.BaseFragment
 import com.cellodove.presentation.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.btSearch.setOnClickListener {
             searchBook(binding.etQuery.text.toString())
         }
+        searchAdapter.setItemClickListener(object : SearchAdapter.OnItemClickListener{
+            override fun onClick(documents: Documents) {
+                Toast.makeText(requireContext(),"${documents.title}",Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun observeViewModel() {

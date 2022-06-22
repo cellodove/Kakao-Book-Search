@@ -6,15 +6,31 @@ import androidx.recyclerview.widget.DiffUtil
 import com.cellodove.domain.model.response.Documents
 
 class SearchAdapter : PagingDataAdapter<Documents,BookViewHolder>(DOCUMENTS_COMPARATOR) {
+
+    private lateinit var itemClickListener : OnItemClickListener
+    interface OnItemClickListener {
+        fun onClick(documents : Documents)
+    }
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
+    }
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null){
             holder.bind(item)
+            holder.itemView.setOnClickListener {
+                itemClickListener.onClick(getItem(position)!!)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         return BookViewHolder.create(parent)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     companion object{
