@@ -9,7 +9,7 @@ class SearchAdapter : PagingDataAdapter<Documents,BookViewHolder>(DOCUMENTS_COMP
 
     private lateinit var itemClickListener : OnItemClickListener
     interface OnItemClickListener {
-        fun onClick(documents : Documents)
+        fun onClick(documents : Documents, isLike : Boolean)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -20,7 +20,7 @@ class SearchAdapter : PagingDataAdapter<Documents,BookViewHolder>(DOCUMENTS_COMP
         if (item != null){
             holder.bind(item)
             holder.itemView.setOnClickListener {
-                itemClickListener.onClick(getItem(position)!!)
+                itemClickListener.onClick(getItem(position)!!,holder.isToggle())
             }
         }
     }

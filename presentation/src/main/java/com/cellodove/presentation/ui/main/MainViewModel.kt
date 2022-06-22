@@ -1,5 +1,6 @@
 package com.cellodove.presentation.ui.main
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,18 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val searchBookUseCase: SearchBookUseCase,
     private val searchBookPagingUseCase : SearchBookPagingUseCase
 ) : ViewModel() {
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<Documents>>? = null
-
-    private val _useLiveData = MutableLiveData<FragmentStep>()
-    val userLiveData: LiveData<FragmentStep>
-        get() = _useLiveData
-    init {
-        _useLiveData.value = FragmentStep.SEARCH_BOOK
-    }
 
     fun searchBook(queryString: String): Flow<PagingData<Documents>> {
         val lastResult = currentSearchResult
@@ -43,21 +36,5 @@ class MainViewModel @Inject constructor(
         currentSearchResult = newResult
         return newResult
 
-    }
-
-
-
-
-    fun request(userQuery: String, page: Int, size: Int) = viewModelScope.launch {
-        searchBookUseCase(userQuery,page,size,viewModelScope){
-        }
-    }
-
-    fun fragmentChange(fragmentStep:FragmentStep){
-        _useLiveData.value = fragmentStep
-    }
-
-    enum class FragmentStep{
-        SEARCH_BOOK,BOOK_DETAIL
     }
 }

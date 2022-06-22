@@ -5,8 +5,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.cellodove.book.R
 import com.cellodove.book.databinding.FragmentSearchBinding
 import com.cellodove.domain.model.response.Documents
 import com.cellodove.presentation.base.BaseFragment
@@ -34,8 +37,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             searchBook(binding.etQuery.text.toString())
         }
         searchAdapter.setItemClickListener(object : SearchAdapter.OnItemClickListener{
-            override fun onClick(documents: Documents) {
-                Toast.makeText(requireContext(),"${documents.title}",Toast.LENGTH_SHORT).show()
+            override fun onClick(documents: Documents,isLike : Boolean) {
+                val bundle = Bundle()
+                bundle.putBoolean("isLike",isLike)
+                bundle.putString("title", documents.title)
+                bundle.putString("thumbnail", documents.thumbnail)
+                bundle.putString("price", documents.price.toString())
+                bundle.putString("publisher", documents.publisher)
+                bundle.putString("contents", documents.contents)
+
+                val action =
+                findNavController().navigate(R.id.BookDetailsFragment,bundle)
             }
         })
     }

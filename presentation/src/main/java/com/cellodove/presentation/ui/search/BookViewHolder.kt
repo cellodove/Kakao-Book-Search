@@ -9,9 +9,6 @@ import com.cellodove.domain.model.response.Documents
 
 class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.ViewHolder(binding.root){
 
-    init {
-    }
-
     fun bind(documents : Documents){
         showData(documents)
     }
@@ -25,6 +22,10 @@ class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.Vi
             bookName.text = documents.title
             bookPrice.text = documents.price.toString()
         }
+    }
+
+    fun isToggle() : Boolean{
+        return binding.likeButton.isChecked
     }
 
     companion object{

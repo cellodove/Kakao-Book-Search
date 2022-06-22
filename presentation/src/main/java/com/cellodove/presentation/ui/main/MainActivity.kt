@@ -20,30 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     override fun observeViewModel() {
-        viewModel.userLiveData.observe(this){
-            val fragment = when(it){
-                MainViewModel.FragmentStep.SEARCH_BOOK -> SearchFragment()
 
-                MainViewModel.FragmentStep.BOOK_DETAIL -> DetailFragment()
-            }
-            setFragment(R.id.fragmentContainer, fragment,true)
-        }
     }
 
-    private fun setFragment(layout: Int, child: Fragment, isAddStack: Boolean){
-        val childFt = supportFragmentManager.beginTransaction()
-        if (isAddStack){
-            if (!child.isAdded) {
-//                childFt.setCustomAnimations(R.anim.anim_slide_in_left, R.anim.anim_exit_to_left, R.anim.anim_enter_from_left, R.anim.anim_slide_out_right)
-                childFt.replace(layout, child)
-                childFt.addToBackStack(null)
-            }
-        }else{
-            if (!child.isAdded) {
-                childFt.replace(layout, child)
-//                 childFt.addToBackStack(null)
-            }
-        }
-        childFt.commit()
-    }
 }
