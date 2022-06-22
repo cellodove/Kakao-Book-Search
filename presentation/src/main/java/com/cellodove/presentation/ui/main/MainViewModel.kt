@@ -22,20 +22,28 @@ class MainViewModel @Inject constructor(
     private val searchBookUseCase: SearchBookUseCase,
     private val searchBookPagingUseCase : SearchBookPagingUseCase
 ) : ViewModel() {
+    private var currentQueryValue: String? = null
+    private var currentSearchResult: Flow<PagingData<Documents>>? = null
+
     private val _useLiveData = MutableLiveData<FragmentStep>()
-
-    var pagingDataFlow: Flow<PagingData<Documents>>
-
     val userLiveData: LiveData<FragmentStep>
         get() = _useLiveData
     init {
         _useLiveData.value = FragmentStep.SEARCH_BOOK
-        pagingDataFlow = searchBook("android")
-
     }
 
-    fun searchBook(query: String) : Flow<PagingData<Documents>> = searchBookPagingUseCase.getBookPagingData(query,viewModelScope)
+    fun searchBook(queryString: String): Flow<PagingData<Documents>> {
+        val lastResult = currentSearchResult
+        if (queryString == currentQueryValue && lastResult != null) {
+            return lastResult
+        }
+        currentQueryValue = queryString
+        val newResult: Flow<PagingData<Documents>> = searchBookPagingUseCase.getBookPagingData(queryString,viewModelScope)
+            .cachedIn(viewModelScope)
+        currentSearchResult = newResult
+        return newResult
 
+    }
 
 
 
