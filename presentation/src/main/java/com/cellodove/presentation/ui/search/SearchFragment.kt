@@ -35,6 +35,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.searchRecycler.addItemDecoration(decoration)
         binding.btSearch.setOnClickListener {
             searchBook(binding.etQuery.text.toString())
+            searchAdapter.setSearchWord(binding.etQuery.text.toString())
         }
         searchAdapter.setItemClickListener(object : SearchAdapter.OnItemClickListener{
             override fun onClick(documents: Documents,isLike : Boolean) {
@@ -45,8 +46,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 bundle.putString("price", documents.price.toString())
                 bundle.putString("publisher", documents.publisher)
                 bundle.putString("contents", documents.contents)
-
-                val action =
                 findNavController().navigate(R.id.BookDetailsFragment,bundle)
             }
         })

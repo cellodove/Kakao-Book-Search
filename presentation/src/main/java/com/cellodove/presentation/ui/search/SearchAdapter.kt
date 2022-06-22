@@ -12,18 +12,27 @@ class SearchAdapter : PagingDataAdapter<Documents,BookViewHolder>(DOCUMENTS_COMP
         fun onClick(documents : Documents, isLike : Boolean)
     }
 
+    private var searchWord : String = ""
+
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
+
+    fun setSearchWord(word : String){
+        this.searchWord = word
+    }
+
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null){
-            holder.bind(item)
+            holder.bind(item,searchWord)
             holder.itemView.setOnClickListener {
                 itemClickListener.onClick(getItem(position)!!,holder.isToggle())
             }
         }
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         return BookViewHolder.create(parent)

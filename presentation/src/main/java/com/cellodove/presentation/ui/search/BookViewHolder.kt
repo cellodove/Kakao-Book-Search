@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.cellodove.book.R
 import com.cellodove.book.databinding.BookListItemBinding
 import com.cellodove.domain.model.response.Documents
 
 class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.ViewHolder(binding.root){
 
-    fun bind(documents : Documents){
+    fun bind(documents : Documents, searchWord : String){
         showData(documents)
     }
 
@@ -31,7 +32,7 @@ class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.Vi
     companion object{
         fun create(parent: ViewGroup): BookViewHolder{
             val layoutInflater = LayoutInflater.from(parent.context)
-            return BookViewHolder(BookListItemBinding.inflate(layoutInflater))
+            return BookViewHolder(BookListItemBinding.inflate(layoutInflater,parent,false))
         }
     }
 }
