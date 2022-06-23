@@ -2,8 +2,6 @@ package com.cellodove.presentation.ui.detail
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.cellodove.book.R
@@ -18,8 +16,21 @@ import java.text.DecimalFormat
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
     private val viewModel : MainViewModel by activityViewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val title = arguments?.getString("title") ?: ""
+        val isLike = viewModel.getCheckLikeList().contains(title)
+        val thumbnail = arguments?.getString("thumbnail") ?: ""
+        val price = arguments?.getInt("price") ?: 0
+        val publisher = arguments?.getString("publisher") ?: ""
+        val contents = arguments?.getString("contents") ?: ""
+
         initToolbar(
             binding.layoutToolbar,
             "도서 상세",
@@ -28,13 +39,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 requireActivity().onBackPressed()
             }
         )
-
-        val title = arguments?.getString("title") ?: ""
-        val isLike = viewModel.getCheckLikeList().contains(title)
-        val thumbnail = arguments?.getString("thumbnail") ?: ""
-        val price = arguments?.getInt("price") ?: 0
-        val publisher = arguments?.getString("publisher") ?: ""
-        val contents = arguments?.getString("contents") ?: ""
 
         binding.apply {
             if (thumbnail.isNotEmpty()){

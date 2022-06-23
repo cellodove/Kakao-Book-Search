@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
-
     private const val BASE_URL = "https://dapi.kakao.com"
 
     @Provides
@@ -43,11 +41,9 @@ internal object NetworkModule {
         }.build()
     }
 
-
     @Provides
     @Singleton
     fun provideDeliveryService(retrofit: Retrofit): KakaoBookService {
         return retrofit.create(KakaoBookService::class.java)
     }
-
 }

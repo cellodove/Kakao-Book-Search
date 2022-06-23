@@ -2,13 +2,9 @@ package com.cellodove.data.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.cellodove.data.map
 import com.cellodove.data.mapperToBookItemResponseList
-import com.cellodove.data.mapperToBookResponseList
-import com.cellodove.data.model.BookItemResponse
-import com.cellodove.data.model.BookResponse
 import com.cellodove.data.service.KakaoBookService
-import com.cellodove.domain.model.response.Documents
+import com.cellodove.domain.model.Documents
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject

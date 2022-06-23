@@ -11,52 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/searchContainer"/>
+        app:layout_constraintBottom_toTopOf="@+id/inputLayout"/>
 
-    <LinearLayout
-        android:id="@+id/searchContainer"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_baseline_search_24"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@+id/layoutToolbar"
-        app:layout_constraintBottom_toTopOf="@+id/searchRecycler"
-        android:orientation="horizontal">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintBottom_toTopOf="@+id/searchRecycler">
+        <EditText
+            android:id="@+id/etQuery"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="도서 검색"
+            android:imeOptions="actionSearch"
+            android:inputType="textNoSuggestions"
+            android:selectAllOnFocus="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                app:startIconDrawable="@drawable/ic_baseline_search_24"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-                <EditText
-                    android:id="@+id/etQuery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="도서 검색"
-                    android:imeOptions="actionSearch"
-                    android:inputType="textNoSuggestions"
-                    android:selectAllOnFocus="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/searchContainer"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     <ProgressBar
@@ -74,7 +58,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/searchContainer"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayout"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
@@ -98,7 +82,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/searchContainer"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayout"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView

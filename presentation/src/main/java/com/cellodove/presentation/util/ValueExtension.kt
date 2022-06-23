@@ -3,14 +3,14 @@ package com.cellodove.presentation.util
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
-import com.cellodove.domain.model.response.Documents
+import com.cellodove.domain.model.Documents
 import com.cellodove.presentation.ui.search.BookViewHolder
 
 fun CombinedLoadStates.decideOnState(
     adapter : PagingDataAdapter<Documents, BookViewHolder>,
     showLoading: (Boolean) -> Unit,
     showEmptyState: (Boolean) -> Unit,
-    showError: (String) -> Unit
+    showError: () -> Unit
 ) {
     showLoading(refresh is LoadState.Loading)
 
@@ -27,5 +27,5 @@ fun CombinedLoadStates.decideOnState(
         ?: prepend as? LoadState.Error
         ?: refresh as? LoadState.Error
 
-    errorState?.let { showError(it.error.toString()) }
+    errorState?.let { showError() }
 }

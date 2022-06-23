@@ -1,12 +1,11 @@
 package com.cellodove.data
 
-import androidx.lifecycle.Transformations.map
 import com.cellodove.data.model.BookItemResponse
 import com.cellodove.data.model.BookMetaResponse
 import com.cellodove.data.model.BookResponse
-import com.cellodove.domain.model.response.Documents
-import com.cellodove.domain.model.response.Meta
-import com.cellodove.domain.model.response.SearchBookResponse
+import com.cellodove.domain.model.Documents
+import com.cellodove.domain.model.Meta
+import com.cellodove.domain.model.SearchBookResponse
 
 fun Meta.map() = BookMetaResponse(
     total_count,
@@ -70,14 +69,6 @@ fun mapperToBookResponseList(documents:List<Documents>) : List<BookItemResponse>
         )
     }
 }
-
-
-
-
-
-
-
-
 
 
 fun BookMetaResponse.map() = Meta(

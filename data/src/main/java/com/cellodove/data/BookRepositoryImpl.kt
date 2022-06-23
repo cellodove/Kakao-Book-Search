@@ -6,8 +6,8 @@ import androidx.paging.PagingData
 import com.cellodove.data.service.KakaoBookService
 import com.cellodove.data.source.BookRemoteDataSource
 import com.cellodove.data.source.BookRemotePagingDataSource
-import com.cellodove.domain.model.response.Documents
-import com.cellodove.domain.model.response.SearchBookResponse
+import com.cellodove.domain.model.Documents
+import com.cellodove.domain.model.SearchBookResponse
 import com.cellodove.domain.repository.BookRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,8 +1,8 @@
 package com.cellodove.domain.repository
 
 import androidx.paging.PagingData
-import com.cellodove.domain.model.response.Documents
-import com.cellodove.domain.model.response.SearchBookResponse
+import com.cellodove.domain.model.Documents
+import com.cellodove.domain.model.SearchBookResponse
 import kotlinx.coroutines.flow.Flow
 
 interface BookRepository {

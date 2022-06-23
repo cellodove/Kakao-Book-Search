@@ -16,15 +16,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bookTextContainer"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_bias="0"
         tools:src="@drawable/ic_launcher_background"/>
 
     <LinearLayout
         android:id="@+id/bookTextContainer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ImageThumbnail"
+        app:layout_constraintEnd_toStartOf="@+id/likeButton"
+        app:layout_constraintHorizontal_bias="0"
         android:layout_marginStart="20dp"
         android:orientation="vertical">
 
@@ -32,13 +35,17 @@
             android:id="@+id/bookName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="@color/black"
+            android:textSize="20sp"
             tools:text="코틀린"/>
         <TextView
             android:id="@+id/bookPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_60"
+            android:textSize="15sp"
             tools:text="78,000원"/>
     </LinearLayout>
 
@@ -48,8 +55,10 @@
         android:layout_height="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bookTextContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
+        android:clickable="false"
         android:button="@android:color/transparent"
         android:background="@drawable/selector_book_favorite"/>
 

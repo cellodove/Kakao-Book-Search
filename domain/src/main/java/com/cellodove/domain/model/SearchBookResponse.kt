@@ -1,4 +1,4 @@
-package com.cellodove.domain.model.response
+package com.cellodove.domain.model
 
 data class SearchBookResponse(
     val meta : Meta,

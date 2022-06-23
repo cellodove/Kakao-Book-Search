@@ -1,6 +1,6 @@
 package com.cellodove.domain.usecase
 
-import com.cellodove.domain.model.response.SearchBookResponse
+import com.cellodove.domain.model.SearchBookResponse
 import com.cellodove.domain.repository.BookRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
