@@ -5,17 +5,22 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.cellodove.book.R
 import com.cellodove.book.databinding.FragmentSearchBinding
 import com.cellodove.domain.model.response.Documents
 import com.cellodove.presentation.base.BaseFragment
 import com.cellodove.presentation.ui.main.MainViewModel
+import com.cellodove.presentation.util.decideOnState
 import com.cellodove.presentation.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -33,7 +38,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.layoutToolbar,"Pay", leftIcon = R.drawable.ic_baseline_favorite_24)
+        viewInit()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        searchAdapter.setCheckLike(viewModel.getCheckLikeList())
+        searchAdapter.refresh()
+    }
+
+    override fun observeViewModel() {
+        refreshList()
+    }
+
+    private fun viewInit(){
         binding.searchRecycler.adapter = searchAdapter
         val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.searchRecycler.addItemDecoration(decoration)
@@ -70,22 +88,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 }
             }
         })
-    }
 
-    override fun onResume() {
-        super.onResume()
-        searchAdapter.setCheckLike(viewModel.getCheckLikeList())
-        searchAdapter.refresh()
-    }
-
-    override fun observeViewModel() {
-        refreshList()
+        binding.retryButton.setOnClickListener {
+            searchAdapter.retry()
+        }
     }
 
     private fun searchBook(query :String){
-        searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             viewModel.searchBook(query).collectLatest {
+                binding.searchNothing.isVisible = false
+                binding.errorLayout.isVisible = false
+                binding.searchRecycler.visibility = View.VISIBLE
                 searchAdapter.setCheckLike(viewModel.getCheckLikeList())
                 searchAdapter.submitData(it)
             }
@@ -93,11 +107,25 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun refreshList() {
-        lifecycleScope.launch {
-            searchAdapter.loadStateFlow
-                .distinctUntilChangedBy { it.refresh }
-                .filter { it.refresh is LoadState.NotLoading }
-                .collect { binding.searchRecycler.scrollToPosition(0) }
+        searchAdapter.addLoadStateListener { loadState ->
+            loadState.decideOnState(
+                adapter = searchAdapter,
+                showLoading = { visible ->
+                    binding.progressBar.isVisible = visible
+                    binding.searchNothing.isVisible = false
+                    binding.errorLayout.isVisible = false
+                },
+                showEmptyState = { visible ->
+                    binding.searchRecycler.scrollToPosition(0)
+                    binding.searchNothing.isVisible = visible
+                    binding.errorLayout.isVisible = false
+                },
+                showError = { message ->
+                    binding.searchRecycler.visibility = View.INVISIBLE
+                    binding.searchNothing.isVisible = false
+                    binding.errorLayout.isVisible = true
+                }
+            )
         }
     }
 }

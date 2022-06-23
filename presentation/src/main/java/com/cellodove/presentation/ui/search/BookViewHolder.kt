@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.cellodove.book.R
 import com.cellodove.book.databinding.BookListItemBinding
 import com.cellodove.domain.model.response.Documents
+import java.text.DecimalFormat
 
 class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.ViewHolder(binding.root){
 
@@ -36,7 +37,8 @@ class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.Vi
             }else{
                 binding.ImageThumbnail.setImageResource(R.drawable.ic_baseline_image_not_supported_24)
             }
-            bookPrice.text = documents.price.toString()
+            val decimal = DecimalFormat("#,###")
+            bookPrice.text = "${decimal.format(documents.price)}원"
             val text = documents.title
             val htmlText = text.replace(searchWord, "<font color='#0be3d8'>$searchWord</font>")
             bookName.text = HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY)

@@ -12,6 +12,7 @@ import com.cellodove.presentation.base.BaseFragment
 import com.cellodove.presentation.ui.main.MainViewModel
 import com.cellodove.presentation.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
@@ -45,7 +46,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 binding.thumbnail.setImageResource(R.drawable.ic_baseline_image_not_supported_200)
             }
             bookName.text = title
-            bookPrice.text = "$price 원"
+            val decimal = DecimalFormat("#,###")
+            bookPrice.text = "${decimal.format(price)}원"
             bookPublisher.text = publisher
             bookContent.text = contents
             likeButton.isChecked = isLike
