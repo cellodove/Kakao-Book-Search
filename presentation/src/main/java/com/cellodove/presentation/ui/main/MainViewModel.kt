@@ -1,21 +1,13 @@
 package com.cellodove.presentation.ui.main
 
-import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.cellodove.domain.model.response.Documents
 import com.cellodove.domain.usecase.SearchBookPagingUseCase
-import com.cellodove.domain.usecase.SearchBookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +16,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<Documents>>? = null
+    private val checkLikeList = ArrayList<String>()
 
     fun searchBook(queryString: String): Flow<PagingData<Documents>> {
         val lastResult = currentSearchResult
@@ -35,6 +28,21 @@ class MainViewModel @Inject constructor(
             .cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult
+    }
 
+    fun addCheckLike(title : String){
+        checkLikeList.add(title)
+    }
+
+    fun deleteCheckLike(title : String){
+        checkLikeList.remove(title)
+    }
+
+    fun getCheckLikeList():ArrayList<String>{
+        return checkLikeList
+    }
+
+    fun deleteAllLikeList(){
+        checkLikeList.clear()
     }
 }
