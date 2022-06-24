@@ -28,6 +28,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     private val viewModel : MainViewModel by activityViewModels()
     private val searchAdapter = SearchAdapter()
     private var searchJob: Job? = null
+    private var oldQuery = ""
+    private var newQuery = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,16 +52,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.searchRecycler.addItemDecoration(decoration)
 
         binding.etQuery.setOnEditorActionListener { _, actionId, _ ->
+            newQuery = binding.etQuery.text.toString()
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (binding.etQuery.text.toString().isEmpty()){
-                    binding.inputLayout.error = "텍스트를 입력해 주세요."
-                }else{
-                    hideKeyboard()
-                    binding.inputLayout.error = null
-                    viewModel.deleteAllLikeList()
-                    searchBook(binding.etQuery.text.toString())
-                    binding.searchRecycler.scrollToPosition(0)
-                    searchAdapter.setSearchWord(binding.etQuery.text.toString())
+                when {
+                    binding.etQuery.text.toString().isEmpty() -> {
+                        binding.inputLayout.error = "텍스트를 입력해 주세요."
+                    }
+                    newQuery == oldQuery -> Unit
+                    else -> {
+                        oldQuery = newQuery
+                        hideKeyboard()
+                        binding.inputLayout.error = null
+                        viewModel.deleteAllLikeList()
+                        searchBook(binding.etQuery.text.toString())
+                        binding.searchRecycler.scrollToPosition(0)
+                        searchAdapter.setSearchWord(binding.etQuery.text.toString())
+                    }
                 }
                 true
             } else {
@@ -72,15 +80,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
 
         binding.inputLayout.setEndIconOnClickListener {
-            if (binding.etQuery.text.toString().isEmpty()){
-                binding.inputLayout.error = "텍스트를 입력해 주세요."
-            }else{
-                hideKeyboard()
-                binding.inputLayout.error = null
-                viewModel.deleteAllLikeList()
-                searchBook(binding.etQuery.text.toString())
-                binding.searchRecycler.scrollToPosition(0)
-                searchAdapter.setSearchWord(binding.etQuery.text.toString())
+            newQuery = binding.etQuery.text.toString()
+            when {
+                binding.etQuery.text.toString().isEmpty() -> {
+                    binding.inputLayout.error = "텍스트를 입력해 주세요."
+                }
+                newQuery == oldQuery -> Unit
+                else -> {
+                    oldQuery = newQuery
+                    hideKeyboard()
+                    binding.inputLayout.error = null
+                    viewModel.deleteAllLikeList()
+                    searchBook(binding.etQuery.text.toString())
+                    binding.searchRecycler.scrollToPosition(0)
+                    searchAdapter.setSearchWord(binding.etQuery.text.toString())
+                }
             }
         }
 
