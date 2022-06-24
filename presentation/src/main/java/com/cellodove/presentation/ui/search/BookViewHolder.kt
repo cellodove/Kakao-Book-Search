@@ -28,9 +28,10 @@ class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.Vi
             }
             val decimal = DecimalFormat("#,###")
             bookPrice.text = "${decimal.format(documents.price)}원"
-            val text = documents.title
-            val htmlText = text.replace(searchWord, "<font color='#0be3d8'>$searchWord</font>")
-            bookName.text = HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+            var text = documents.title
+            text = text.replace(searchWord, "<font color='#0be3d8'>$searchWord</font>")
+            bookName.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
             binding.likeButton.isChecked = isLikeList.contains(documents.title)
         }
     }
