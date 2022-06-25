@@ -52,7 +52,7 @@
 
 ## ****buildSrc****
 
-모듈이 많다보니 dependency를 관리가 까다롭습니다. 이때 buildSrc를 사용해 한번해 관리할 수가있습니다.
+모듈이 많다보니 dependency를 관리가 까다롭습니다. 이때 buildSrc를 사용해 한번해 관리할 수 있습니다.
 
 - Dependencies.kt
 
@@ -321,7 +321,7 @@ class BookRemotePagingDataSource @Inject constructor(
         val position = params.key ?: SEARCH_STARTING_PAGE_INDEX
         val apiQuery = query
         return try {
-            val response =  kakaoBookService.getBooks("KakaoAK 909689c173c91d9b3ea428891711edd1", apiQuery, position, 50)
+            val response =  kakaoBookService.getBooks(KAKAO_KEY, apiQuery, position, 50)
             val bookResponse = response.documents
             val nextKey = if (response.documents.isEmpty()){
                 null
@@ -341,6 +341,10 @@ class BookRemotePagingDataSource @Inject constructor(
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
+    }
+
+    companion object{
+        const val KAKAO_KEY = "KakaoAK 909689c173c91d9b3ea428891711edd1"
     }
 }
 ```
@@ -752,7 +756,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
 api를 중복으로 호출하는 상황을 막기위해 검색어가 같다면 api를 호출하지 않도록 만들었습니다.
 
-검색어가없으면 검색되지 않도록 만들었습니다.
+마찬가지로 검색어가없으면 검색되지 않도록 만들었습니다.
 
 리사이클러뷰 상태에따라 UI가 변경되도록 만들었습니다.
 
@@ -845,7 +849,7 @@ fun CombinedLoadStates.decideOnState(
 }
 ```
 
-데이터를 처리하기위한 코드들입니다. 여기서는 페이징 상태를 처리하기위해 따로 빼 두었습니다.
+데이터를 처리하기위한 코드입니다. 여기서는 페이징 상태를 처리하기위한 코드가 있습니다.
 
 - ViewExtension
 
@@ -870,7 +874,7 @@ fun initToolbar(
 }
 ```
 
-뷰익스텐션 코드입니다. 여기서는 툴바 UI처리를위한 코드만 있습니다.
+뷰익스텐션 코드입니다. 여기서는 툴바 UI처리를위한 코드가 있습니다.
 
 ## App
 
