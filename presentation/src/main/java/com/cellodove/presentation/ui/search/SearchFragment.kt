@@ -15,6 +15,11 @@ import com.cellodove.book.R
 import com.cellodove.book.databinding.FragmentSearchBinding
 import com.cellodove.domain.model.Documents
 import com.cellodove.presentation.base.BaseFragment
+import com.cellodove.presentation.ui.main.MainActivity.Companion.CONTENTS
+import com.cellodove.presentation.ui.main.MainActivity.Companion.PRICE
+import com.cellodove.presentation.ui.main.MainActivity.Companion.PUBLISHER
+import com.cellodove.presentation.ui.main.MainActivity.Companion.THUMBNAIL
+import com.cellodove.presentation.ui.main.MainActivity.Companion.TITLE
 import com.cellodove.presentation.ui.main.MainViewModel
 import com.cellodove.presentation.util.decideOnState
 import com.cellodove.presentation.util.initToolbar
@@ -101,11 +106,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         searchAdapter.setItemClickListener(object : SearchAdapter.OnItemClickListener{
             override fun onClick(documents: Documents) {
                 val bundle = Bundle()
-                bundle.putString("title", documents.title)
-                bundle.putString("thumbnail", documents.thumbnail)
-                bundle.putInt("price", documents.price)
-                bundle.putString("publisher", documents.publisher)
-                bundle.putString("contents", documents.contents)
+                bundle.putString(TITLE, documents.title)
+                bundle.putString(THUMBNAIL, documents.thumbnail)
+                bundle.putInt(PRICE, documents.price)
+                bundle.putString(PUBLISHER, documents.publisher)
+                bundle.putString(CONTENTS, documents.contents)
                 findNavController().navigate(R.id.BookDetailsFragment,bundle)
             }
         })

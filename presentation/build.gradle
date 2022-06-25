@@ -10,7 +10,6 @@ apply from: rootProject.file("android.gradle")
 
 dependencies {
     implementation project(":domain")
-    implementation project(":data")
 
     implementation(AndroidX.CORE_KTX)
     implementation(AndroidX.APP_COMPAT)

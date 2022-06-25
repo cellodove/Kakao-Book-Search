@@ -47,7 +47,7 @@ class SearchAdapter : PagingDataAdapter<Documents,BookViewHolder>(DOCUMENTS_COMP
 
     companion object{
         private val DOCUMENTS_COMPARATOR = object : DiffUtil.ItemCallback<Documents>(){
-            override fun areItemsTheSame(oldItem: Documents, newItem: Documents) = oldItem.title == newItem.title
+            override fun areItemsTheSame(oldItem: Documents, newItem: Documents) = oldItem.isbn == newItem.isbn && oldItem.title == newItem.title
 
             override fun areContentsTheSame(oldItem: Documents, newItem: Documents) = oldItem == newItem
         }

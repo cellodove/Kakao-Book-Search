@@ -1,4 +1,4 @@
-import Versions.PAGING_VERSION
+
 
 object Versions {
     const val KOTLINX_COROUTINES = "1.5.0"
@@ -69,6 +69,6 @@ object Test {
 }
 
 object Paging{
-    const val PAGING_RUNTIME = "androidx.paging:paging-runtime:$PAGING_VERSION"
-    const val PAGING_COMMON  = "androidx.paging:paging-common:$PAGING_VERSION"
+    const val PAGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGING_VERSION}"
+    const val PAGING_COMMON  = "androidx.paging:paging-common:${Versions.PAGING_VERSION}"
 }

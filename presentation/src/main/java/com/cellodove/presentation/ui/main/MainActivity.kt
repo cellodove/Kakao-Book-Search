@@ -9,4 +9,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun observeViewModel() = Unit
 
+
+    companion object{
+        const val TITLE = "title"
+        const val THUMBNAIL = "thumbnail"
+        const val PRICE = "price"
+        const val PUBLISHER = "publisher"
+        const val CONTENTS = "contents"
+    }
 }

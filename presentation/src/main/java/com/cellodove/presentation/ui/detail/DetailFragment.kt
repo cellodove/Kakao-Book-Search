@@ -7,6 +7,11 @@ import com.bumptech.glide.Glide
 import com.cellodove.book.R
 import com.cellodove.book.databinding.FragmentDetailBinding
 import com.cellodove.presentation.base.BaseFragment
+import com.cellodove.presentation.ui.main.MainActivity.Companion.CONTENTS
+import com.cellodove.presentation.ui.main.MainActivity.Companion.PRICE
+import com.cellodove.presentation.ui.main.MainActivity.Companion.PUBLISHER
+import com.cellodove.presentation.ui.main.MainActivity.Companion.THUMBNAIL
+import com.cellodove.presentation.ui.main.MainActivity.Companion.TITLE
 import com.cellodove.presentation.ui.main.MainViewModel
 import com.cellodove.presentation.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,12 +24,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val title = arguments?.getString("title") ?: ""
+        val title = arguments?.getString(TITLE) ?: ""
         val isLike = viewModel.getCheckLikeList().contains(title)
-        val thumbnail = arguments?.getString("thumbnail") ?: ""
-        val price = arguments?.getInt("price") ?: 0
-        val publisher = arguments?.getString("publisher") ?: ""
-        val contents = arguments?.getString("contents") ?: ""
+        val thumbnail = arguments?.getString(THUMBNAIL) ?: ""
+        val price = arguments?.getInt(PRICE) ?: 0
+        val publisher = arguments?.getString(PUBLISHER) ?: ""
+        val contents = arguments?.getString(CONTENTS) ?: ""
 
         initToolbar(
             binding.layoutToolbar,
