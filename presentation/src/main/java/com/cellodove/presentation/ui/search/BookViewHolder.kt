@@ -1,5 +1,6 @@
 package com.cellodove.presentation.ui.search
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
@@ -30,8 +31,9 @@ class BookViewHolder(private val binding:BookListItemBinding) :  RecyclerView.Vi
             bookPrice.text = "${decimal.format(documents.price)}원"
 
             var text = documents.title
-            text = text.replace(searchWord, "<font color='#0be3d8'>$searchWord</font>")
+            text = text.replace(searchWord, "<font color='#0be3d8'>$searchWord</font>",true)
             bookName.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
             binding.likeButton.isChecked = isLikeList.contains(documents.title)
         }
     }
