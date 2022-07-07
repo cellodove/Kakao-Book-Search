@@ -9,39 +9,45 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-private const val SEARCH_STARTING_PAGE_INDEX = 1
+const val SEARCH_STARTING_PAGE_INDEX = 1
 
-class BookRemotePagingDataSource @Inject constructor(
-    private val kakaoBookService: KakaoBookService,
-    private val query : String
-) : PagingSource<Int, Documents>() {
+interface BookRemotePagingDataSource{
+    fun getBook(query : String) : PagingSource<Int, Documents>
+}
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Documents> {
-        val position = params.key ?: SEARCH_STARTING_PAGE_INDEX
-        val apiQuery = query
-        return try {
-            val response =  kakaoBookService.getBooks(KAKAO_KEY, apiQuery, position, 50)
-            val bookResponse = response.documents
-            val nextKey = if (response.documents.isEmpty()){
-                null
-            }else{
-                position + 1
-            }
-            LoadResult.Page(data = mapperToDocumentsList(bookResponse), prevKey = if (position == SEARCH_STARTING_PAGE_INDEX) null else position - 1, nextKey = nextKey)
-        } catch (exception: IOException) {
-            LoadResult.Error(exception)
-        } catch (exception: HttpException) {
-            LoadResult.Error(exception)
+class BookRemotePagingDataSourceImpl @Inject constructor(
+    private val kakaoBookService: KakaoBookService
+) : BookRemotePagingDataSource {
+
+    override fun getBook(query: String): PagingSource<Int, Documents> {
+       return object : PagingSource<Int, Documents>(){
+           override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Documents> {
+               val position = params.key ?: SEARCH_STARTING_PAGE_INDEX
+               val apiQuery = query
+               return try {
+                   val response =  kakaoBookService.getBooks(KAKAO_KEY, apiQuery, position, 50)
+                   val bookResponse = response.documents
+                   val nextKey = if (response.documents.isEmpty()){
+                       null
+                   }else{
+                       position + 1
+                   }
+                   LoadResult.Page(data = mapperToDocumentsList(bookResponse), prevKey = if (position == SEARCH_STARTING_PAGE_INDEX) null else position - 1, nextKey = nextKey)
+               } catch (exception: IOException) {
+                   LoadResult.Error(exception)
+               } catch (exception: HttpException) {
+                   LoadResult.Error(exception)
+               }
+           }
+
+           override fun getRefreshKey(state: PagingState<Int, Documents>): Int? {
+               return state.anchorPosition?.let { anchorPosition ->
+                   state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                       ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+               }
+           }
         }
     }
-
-    override fun getRefreshKey(state: PagingState<Int, Documents>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        }
-    }
-
     companion object{
         const val KAKAO_KEY = "KakaoAK 909689c173c91d9b3ea428891711edd1"
     }
