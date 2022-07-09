@@ -2,6 +2,7 @@ package com.cellodove.data.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.cellodove.data.BookRepositoryImpl.Companion.NETWORK_PAGE_SIZE
 import com.cellodove.data.mapperToDocumentsList
 import com.cellodove.data.service.KakaoBookService
 import com.cellodove.domain.model.Documents
@@ -23,9 +24,8 @@ class BookRemotePagingDataSourceImpl @Inject constructor(
        return object : PagingSource<Int, Documents>(){
            override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Documents> {
                val position = params.key ?: SEARCH_STARTING_PAGE_INDEX
-               val apiQuery = query
                return try {
-                   val response =  kakaoBookService.getBooks(KAKAO_KEY, apiQuery, position, 50)
+                   val response =  kakaoBookService.getBooks(KAKAO_KEY, query, position, NETWORK_PAGE_SIZE)
                    val bookResponse = response.documents
                    val nextKey = if (response.documents.isEmpty()){
                        null
