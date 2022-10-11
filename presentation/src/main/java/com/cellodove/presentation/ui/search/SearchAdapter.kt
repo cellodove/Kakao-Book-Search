@@ -32,7 +32,7 @@ class SearchAdapter : PagingDataAdapter<Documents,BookViewHolder>(DOCUMENTS_COMP
         if (item != null){
             holder.bind(item,searchWord,likeList)
             holder.itemView.setOnClickListener {
-                itemClickListener.onClick(getItem(position)!!)
+                itemClickListener.onClick(item)
             }
         }
     }

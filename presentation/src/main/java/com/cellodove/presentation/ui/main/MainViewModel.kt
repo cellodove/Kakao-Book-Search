@@ -1,5 +1,6 @@
 package com.cellodove.presentation.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -17,7 +18,7 @@ class MainViewModel @Inject constructor(
     private val checkLikeList = ArrayList<String>()
 
     fun searchBook(queryString: String): Flow<PagingData<Documents>> {
-        return searchBookPagingUseCase.getBookPagingData(queryString,viewModelScope).cachedIn(viewModelScope)
+        return searchBookPagingUseCase.getBookPagingData(queryString).cachedIn(viewModelScope)
     }
 
     fun addCheckLike(title : String){

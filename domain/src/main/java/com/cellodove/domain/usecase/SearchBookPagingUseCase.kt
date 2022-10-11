@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class SearchBookPagingUseCase(private val kakaoSearchBookRepository : BookRepository) {
-    fun getBookPagingData(userQuery: String, scope : CoroutineScope):Flow<PagingData<Documents>>{
-        return kakaoSearchBookRepository.searchBookPaging(userQuery).cachedIn(scope)
+    fun getBookPagingData(userQuery: String):Flow<PagingData<Documents>>{
+        return kakaoSearchBookRepository.searchBookPaging(userQuery)
     }
 }
